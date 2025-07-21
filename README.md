@@ -2,6 +2,18 @@
 
 Bu proje, modern React uygulamaları için UI bileşenleri ve animasyonları test etme ve öğrenme amacıyla oluşturulmuştur.
 
+## ✨ Motion Nedir?
+
+Motion, web uygulamalarında güçlü ve performanslı animasyonlar oluşturmak için kullanılan bir kütüphanedir. Öne çıkan özellikleri:
+
+- **Kolay Kullanım**: Basit ve anlaşılır API
+- **Güçlü Animasyonlar**: Temel dönüşümlerden ileri seviye etkileşimli hareketlere
+- **Yüksek Performans**: Optimize edilmiş animasyon motoru
+- **Scroll Animasyonları**: Kaydırma tabanlı animasyonlar
+- **Hareket Geçişleri**: Yumuşak ve doğal geçiş efektleri
+- **Gesture Desteği**: Etkileşimli hareket kontrolleri
+- **Layout Animasyonları**: Otomatik düzen değişim animasyonları
+
 ## 🚀 Teknolojiler
 
 - [React](https://reactjs.org/)
@@ -9,6 +21,7 @@ Bu proje, modern React uygulamaları için UI bileşenleri ve animasyonları tes
 - [Vite](https://vitejs.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Shadcn/ui](https://ui.shadcn.com/)
+- [Motion](http://motion.dev/)
 
 ## 📦 Kurulum
 
@@ -53,7 +66,8 @@ Bu proje, modern web geliştirme teknolojilerini öğrenmek ve test etmek için 
 - React bileşen yapısını anlamak
 - TypeScript ile tip güvenli kod yazmayı öğrenmek
 - Modern UI kütüphanelerini kullanmak
-- Animasyon ve geçiş efektlerini uygulamak
+- Motion ile gelişmiş animasyonlar oluşturmak
+- Kullanıcı deneyimini artıran etkileşimler tasarlamak
 
 ## 📝 Not
 
