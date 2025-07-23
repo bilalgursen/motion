@@ -36,9 +36,11 @@ export default function FloatingMenuTest() {
 					layout="position"
 					initial={{
 						y: 300,
+						width: "0px",
 						filter: "blur(40px)",
 					}}
 					animate={{
+						width: "auto",
 						y: 0,
 						filter: "blur(0px)",
 					}}
@@ -48,35 +50,33 @@ export default function FloatingMenuTest() {
 					}}
 					className="fixed bottom-15 left-1/2 -translate-x-1/2  h-16  flex items-center justify-center gap-1"
 				>
-					<AnimatePresence mode="popLayout">
-						<motion.div
-							layout="position"
-							initial={{
-								opacity: 0,
-							}}
-							animate={{
-								opacity: 1,
-							}}
-							className="overflow-hidden"
-						>
-							<div className="flex items-center gap-1 bg-accent rounded-full p-3">
-								<Button variant="outline" size="icon" className="rounded-full">
-									<PlusIcon className="w-4 h-4" />
-								</Button>
-								<Button
-									variant="outline"
-									className="rounded-full border-dashed bg-transparent overflow-hidden border-black"
-								>
-									<PlusIcon className="w-4 h-4" />
-									<span className="text-sm">{buttonTexts[textIndex]}</span>
-								</Button>
-								<Button variant="outline" className="rounded-full">
-									<SettingsIcon className="w-4 h-4" />
-									<span className="text-sm">Ayarlar</span>
-								</Button>
-							</div>
-						</motion.div>
-					</AnimatePresence>
+					<motion.div
+						layout="position"
+						initial={{
+							opacity: 0,
+						}}
+						animate={{
+							opacity: 1,
+						}}
+						className="overflow-hidden"
+					>
+						<div className="flex items-center gap-1 bg-accent rounded-full p-3">
+							<Button variant="outline" size="icon" className="rounded-full">
+								<PlusIcon className="w-4 h-4" />
+							</Button>
+							<Button
+								variant="outline"
+								className="rounded-full border-dashed bg-transparent overflow-hidden border-black"
+							>
+								<PlusIcon className="w-4 h-4" />
+								<span className="text-sm">{buttonTexts[textIndex]}</span>
+							</Button>
+							<Button variant="outline" className="rounded-full">
+								<SettingsIcon className="w-4 h-4" />
+								<span className="text-sm">Ayarlar</span>
+							</Button>
+						</div>
+					</motion.div>
 					<div className="flex items-center p-3 gap-1 bg-accent rounded-full">
 						<Button variant="outline" className="rounded-full">
 							<FilterIcon className="w-4 h-4" />
