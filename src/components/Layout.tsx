@@ -8,7 +8,13 @@ import { MenuIcon, XIcon } from "lucide-react";
 const testRoutes = [
 	{ path: "/", label: "Ana Sayfa" },
 	{ path: "/tests/floating-menu", label: "Floating Menu" },
+	{
+		path: "/tests/floating-menu-vibe-coding",
+		label: "Floating Menu Vibe Coding",
+	},
 	{ path: "/tests/gemini", label: "Gemini" },
+	{ path: "/tests/dynamic-width-modal", label: "Dynamic Width Modal" },
+	{ path: "/tests/playground", label: "Playground" },
 ];
 
 export default function Layout() {

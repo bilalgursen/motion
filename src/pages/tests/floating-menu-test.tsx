@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, MotionConfig } from "motion/react";
+import { motion, MotionConfig } from "motion/react";
 import { Button } from "../../components/ui/button";
 import { FilterIcon, PlusIcon, SettingsIcon } from "lucide-react";
 import { useState } from "react";
