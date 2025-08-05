@@ -1,4 +1,4 @@
-import { motion, MotionConfig } from "motion/react";
+import { AnimatePresence, motion, MotionConfig } from "motion/react";
 import { Button } from "../../components/ui/button";
 import { FilterIcon, PlusIcon, SettingsIcon } from "lucide-react";
 import { useState } from "react";
@@ -40,40 +40,40 @@ export default function FloatingMenuTest() {
 					<p>Left: {Math.round(bounds.left)}px</p>
 				</div>
 			</div>
-			<MotionConfig
+
+			<motion.div
+				layout="position"
+				initial={{
+					y: 300,
+					filter: "blur(40px)",
+				}}
 				transition={{
-					duration: 1,
+					duration: 0.8,
 					type: "spring",
 				}}
+				animate={{
+					y: 0,
+					filter: "blur(0px)",
+				}}
+				whileHover={{
+					scale: 1.05,
+					transition: {
+						duration: 0.2,
+					},
+				}}
+				whileTap={{
+					scale: 0.98,
+				}}
+				className="fixed bottom-15 left-1/2 -translate-x-1/2  h-16  flex items-center justify-center gap-1 "
 			>
-				<motion.div
-					layout="position"
-					initial={{
-						y: 300,
-						filter: "blur(40px)",
-					}}
-					animate={{
-						y: 0,
-						filter: "blur(0px)",
-					}}
-					whileHover={{
-						scale: 1.05,
-						transition: {
-							duration: 0.2,
-						},
-					}}
-					whileTap={{
-						scale: 0.98,
-					}}
-					className="fixed bottom-15 left-1/2 -translate-x-1/2  h-16  flex items-center justify-center gap-1 "
-				>
+				<AnimatePresence mode="popLayout">
 					<motion.div
+						ref={ref}
 						key={buttonTexts[textIndex]}
 						transition={{
 							duration: 0.8,
 							type: "spring",
 						}}
-						ref={ref}
 						className="flex items-center gap-1 bg-accent rounded-full p-3 "
 					>
 						<motion.button className="border bg-background rounded-full shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-9 px-4 py-2 has-[>svg]:px-3">
@@ -123,16 +123,28 @@ export default function FloatingMenuTest() {
 							<span className="text-sm">Ayarlar</span>
 						</Button>
 					</motion.div>
-					<div className="flex items-center p-3 gap-1 bg-accent rounded-full">
-						<button
-							type="button"
-							className="border bg-background rounded-full shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-9 px-4 py-2 has-[>svg]:px-3"
-						>
-							<FilterIcon className="w-4 h-4" />
-						</button>
-					</div>
+				</AnimatePresence>
+				<motion.div
+					initial={{
+						scale: 2,
+					}}
+					animate={{
+						scale: 1,
+					}}
+					transition={{
+						duration: 0.8,
+						type: "spring",
+					}}
+					className="flex items-center p-3 gap-1 bg-accent rounded-full"
+				>
+					<button
+						type="button"
+						className="border bg-background rounded-full shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-9 px-4 py-2 has-[>svg]:px-3"
+					>
+						<FilterIcon className="w-4 h-4" />
+					</button>
 				</motion.div>
-			</MotionConfig>
+			</motion.div>
 		</div>
 	);
 }
