@@ -1,3 +1,4 @@
+// Motion kütüphanesinden animasyon için gerekli fonksiyon ve tipler içe aktarılıyor
 import {
 	AnimatePresence,
 	motion,
@@ -14,6 +15,7 @@ import { FilterIcon, PlusIcon, SettingsIcon, XIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 import useMeasure from "react-use-measure";
 
+// Kullanıcıya gösterilecek buton metinleri
 const buttonTexts = [
 	"Veri Ekle",
 	"Modül Ekleeeeeee",
@@ -22,7 +24,7 @@ const buttonTexts = [
 	"Görev Ekle",
 ];
 
-// Enhanced variants with parent-children orchestration
+// Menü konteyneri için animasyon variantları (giriş/çıkış ve çocuk animasyonları)
 const containerVariants: Variants = {
 	hidden: {
 		y: 300,
@@ -43,6 +45,7 @@ const containerVariants: Variants = {
 	},
 };
 
+// Menü içeriği için animasyon variantları (opacity, scale ve çocukların sıralı animasyonu)
 const contentVariants: Variants = {
 	visible: {
 		opacity: 1,
@@ -69,6 +72,7 @@ const contentVariants: Variants = {
 	},
 };
 
+// Ayarlar kartı içeriği için animasyon variantları
 const cardContentVariants: Variants = {
 	hidden: {
 		opacity: 0,
@@ -80,7 +84,6 @@ const cardContentVariants: Variants = {
 		y: 0,
 		scale: 1,
 		transition: {
-			delay: 0.3,
 			duration: 0.5,
 			type: "spring",
 			stiffness: 300,
@@ -100,7 +103,7 @@ const cardContentVariants: Variants = {
 	},
 };
 
-// Enhanced button variants with micro-interactions
+// Butonlar için mikro etkileşimli animasyon variantları
 const buttonVariants: Variants = {
 	initial: {
 		scale: 1,
@@ -126,6 +129,7 @@ const buttonVariants: Variants = {
 	},
 };
 
+// Ana buton için animasyon variantları
 const mainButtonVariants: Variants = {
 	initial: {
 		scale: 1,
@@ -152,6 +156,7 @@ const mainButtonVariants: Variants = {
 	},
 };
 
+// Buton metni için animasyon variantları
 const textVariants: Variants = {
 	hidden: {
 		filter: "blur(3px)",
@@ -171,7 +176,7 @@ const textVariants: Variants = {
 	},
 };
 
-// New variants for menu items staggering
+// Menüdeki her bir item için animasyon variantları
 const menuItemVariants: Variants = {
 	hidden: {
 		opacity: 0,
@@ -190,6 +195,7 @@ const menuItemVariants: Variants = {
 	},
 };
 
+// Kart içindeki elementler için animasyon variantları
 const cardElementVariants: Variants = {
 	hidden: {
 		opacity: 0,
@@ -206,27 +212,34 @@ const cardElementVariants: Variants = {
 	},
 };
 
+// Ana component: FloatingVibeCoding
+// Gelişmiş animasyonlu, ayarlanabilir, erişilebilir floating menü örneği
 export default function FloatingVibeCoding() {
+	// Buton metni için index state'i
 	const [textIndex, setTextIndex] = useState(0);
+	// Buton metni gösterilsin mi?
 	const [showText, setShowText] = useState(false);
+	// Ayarlar menüsü açık mı?
 	const [settingsOpen, setSettingsOpen] = useState(false);
+	// Ayarlar içeriği gösterilsin mi?
 	const [showContent, setShowContent] = useState(true);
+	// Menü boyutunu ölçmek için referans
 	const [ref, bounds] = useMeasure();
 
-	// Accessibility: Respect user's reduced motion preference
+	// Kullanıcının erişilebilirlik (reduced motion) tercihini al
 	const shouldReduceMotion = useReducedMotion();
 
-	// Motion values
+	// Animasyon ilerlemesini tutan motion value
 	const progress = useMotionValue(0);
 
-	// Transform values with smoother spring physics
+	// Animasyonlu genişlik, yükseklik, padding, border-radius ve gap değerleri
 	const width = useTransform(progress, [0, 1], ["auto", "24rem"]);
 	const height = useTransform(progress, [0, 1], ["4rem", "20rem"]);
 	const padding = useTransform(progress, [0, 1], ["0rem", "1.5rem"]);
 	const borderRadius = useTransform(progress, [0, 1], ["2rem", "1rem"]);
 	const gap = useTransform(progress, [0, 1], ["0.25rem", "0rem"]);
 
-	// Settings change handler with better timing
+	// Ayarlar butonuna tıklanınca aç/kapa işlemi
 	const handleSettingsClick = () => {
 		if (settingsOpen) {
 			setShowContent(false);
@@ -241,14 +254,14 @@ export default function FloatingVibeCoding() {
 		}
 	};
 
-	// Listen to progress changes for content timing
+	// Ayarlar açıldığında animasyon ilerlemesini dinle, içerik zamanlamasını ayarla
 	useMotionValueEvent(progress, "change", (latest) => {
 		if (settingsOpen && latest > 0.5 && !showContent) {
 			setShowContent(true);
 		}
 	});
 
-	// Enhanced animate with accessibility consideration
+	// Ayarlar açılıp kapanırken animasyonu başlat
 	useEffect(() => {
 		if (settingsOpen) {
 			animate(progress, 1, {
@@ -271,6 +284,7 @@ export default function FloatingVibeCoding() {
 		}
 	}, [settingsOpen, progress, shouldReduceMotion]);
 
+	// Ana butona tıklanınca metni göster veya sıradaki metne geç
 	const handleButtonClick = () => {
 		if (!showText) {
 			setShowText(true);
@@ -279,8 +293,10 @@ export default function FloatingVibeCoding() {
 		}
 	};
 
+	// Render: Menü ve ayarlar kartı
 	return (
 		<div className="h-screen">
+			{/* Başlık ve açıklama alanı */}
 			<div className="p-8">
 				<h1 className="text-2xl font-bold mb-4">Floating Menu Test</h1>
 				<p className="text-muted-foreground mb-8">
@@ -300,6 +316,7 @@ export default function FloatingVibeCoding() {
 					type: shouldReduceMotion ? "tween" : "spring",
 				}}
 			>
+				{/* Floating Menü Alanı */}
 				<motion.div
 					layout
 					initial="hidden"
@@ -308,15 +325,10 @@ export default function FloatingVibeCoding() {
 					whileHover={!settingsOpen ? "hover" : undefined}
 					whileTap={!settingsOpen ? "tap" : undefined}
 					className="fixed bottom-15 left-1/2 -translate-x-1/2 flex items-center justify-center bg-accent"
-					style={{
-						width,
-						height,
-						padding,
-						borderRadius,
-						gap,
-					}}
+					style={{ width, height, padding, borderRadius, gap }}
 				>
 					<AnimatePresence mode="wait">
+						{/* Ayarlar açık değilse menü, açıksa ayarlar kartı gösterilir */}
 						{!settingsOpen ? (
 							<motion.div
 								key="menu-content"
@@ -326,16 +338,15 @@ export default function FloatingVibeCoding() {
 								exit="hidden"
 								className="flex items-center gap-1"
 							>
+								{/* Menüdeki butonlar ve ayarlar butonu */}
 								<motion.div
 									key={buttonTexts[textIndex]}
 									variants={menuItemVariants}
-									transition={{
-										duration: 0.8,
-										type: "spring",
-									}}
+									transition={{ duration: 0.8, type: "spring" }}
 									ref={ref}
 									className="flex items-center gap-1 bg-accent rounded-full p-3"
 								>
+									{/* Sadece ikonlu ekle butonu */}
 									<motion.button
 										variants={buttonVariants}
 										initial="initial"
@@ -345,6 +356,7 @@ export default function FloatingVibeCoding() {
 									>
 										<PlusIcon className="w-4 h-4" />
 									</motion.button>
+									{/* Metinli ana buton */}
 									<motion.button
 										onClick={handleButtonClick}
 										variants={mainButtonVariants}
@@ -373,6 +385,7 @@ export default function FloatingVibeCoding() {
 											</AnimatePresence>
 										</Button>
 									</motion.button>
+									{/* Ayarlar butonu */}
 									<motion.div variants={menuItemVariants}>
 										<Button
 											variant="outline"
@@ -384,6 +397,7 @@ export default function FloatingVibeCoding() {
 										</Button>
 									</motion.div>
 								</motion.div>
+								{/* Filtre butonu */}
 								<motion.div
 									variants={menuItemVariants}
 									className="flex items-center p-3 gap-1 bg-accent rounded-full"
@@ -401,6 +415,7 @@ export default function FloatingVibeCoding() {
 								</motion.div>
 							</motion.div>
 						) : showContent ? (
+							// Ayarlar kartı içeriği
 							<motion.div
 								key="settings-card"
 								variants={cardContentVariants}

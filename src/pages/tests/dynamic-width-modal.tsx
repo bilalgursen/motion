@@ -7,68 +7,57 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import useMeasure from "react-use-measure";
-import { AnimatePresence, LayoutGroup, motion } from "motion/react";
+import { motion, MotionConfig, AnimatePresence } from "motion/react";
 
 const DynamicWidthModal = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [cardRef, { width }] = useMeasure();
-
 	return (
-		<>
-			<div className="p-8">{width}</div>
-			<motion.div className="p-8" layout>
-				<LayoutGroup>
-					<AnimatePresence mode="popLayout">
-						<motion.div
-							style={{
-								visibility: isOpen ? "hidden" : "visible",
-							}}
+		<MotionConfig transition={{ duration: 1, ease: "linear" }}>
+			<motion.div className="p-8">
+				<AnimatePresence>
+					{!isOpen && (
+						<motion.button
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ width: "500px" }}
+							onClick={() => setIsOpen(true)}
+							className="bg-secondary text-primary p-3 rounded-lg w-fit"
 						>
-							<Button
-								variant="secondary"
-								type="button"
-								onClick={() => setIsOpen(true)}
-							>
-								Open Modal
-							</Button>
-						</motion.div>
-
+							Open Modal
+						</motion.button>
+					)}
+					{/* {isOpen && (
 						<motion.div
-							style={{
-								visibility: isOpen ? "visible" : "hidden",
-							}}
+							initial={{ width: "0" }}
+							animate={{ width: "auto" }}
+							exit={{ opacity: 0 }}
+							className="w-fit bg-secondary border-none shadow-none overflow-hidden p-3 rounded-lg"
 						>
-							<Card
-								ref={cardRef}
-								className="w-fit bg-secondary border-none shadow-none"
-							>
-								<CardHeader>
-									<CardTitle>
-										<div className="flex justify-between items-center">
-											<h2>Dynamic Width Modal</h2>
-											<button type="button" onClick={() => setIsOpen(false)}>
-												×
-											</button>
-										</div>
-									</CardTitle>
-								</CardHeader>
-								<CardContent>
-									<p>Bu modal tıklandığında belirli bir genişliğe açılır.</p>
-								</CardContent>
+							<CardHeader>
+								<CardTitle>
+									<div className="flex justify-between items-center">
+										<h2>Dynamic Width Modal</h2>
+										<button type="button" onClick={() => setIsOpen(false)}>
+											×
+										</button>
+									</div>
+								</CardTitle>
+							</CardHeader>
+							<CardContent>
+								<p>Bu modal tıklandığında belirli bir genişliğe açılır.</p>
+							</CardContent>
 
-								<CardFooter className="flex gap-2">
-									<Button type="button" onClick={() => setIsOpen(false)}>
-										İptal
-									</Button>
-									<Button type="button">Kaydet</Button>
-								</CardFooter>
-							</Card>
+							<CardFooter className="flex gap-2">
+								<Button type="button" onClick={() => setIsOpen(false)}>
+									İptal
+								</Button>
+								<Button type="button">Kaydet</Button>
+							</CardFooter>
 						</motion.div>
-					</AnimatePresence>
-				</LayoutGroup>
+					)} */}
+				</AnimatePresence>
 			</motion.div>
-		</>
+		</MotionConfig>
 	);
 };
 
