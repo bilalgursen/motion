@@ -15,6 +15,8 @@ const testRoutes = [
 	{ path: "/tests/gemini", label: "Gemini" },
 	{ path: "/tests/dynamic-width-modal", label: "Dynamic Width Modal" },
 	{ path: "/tests/playground", label: "Playground" },
+	{ path: "/tests/yeni-sayfa", label: "Yeni Sayfa" },
+	{ path: "/tests/magic-emoji", label: "Magic Emoji" },
 ];
 
 export default function Layout() {

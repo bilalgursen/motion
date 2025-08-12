@@ -8,6 +8,8 @@ import GeminiTest from "./pages/tests/gemini-test";
 import FloatingVibeCoding from "./pages/tests/floating-vibe-coding";
 import DynamicWidthModal from "./pages/tests/dynamic-width-modal";
 import Playground from "./pages/tests/playground";
+import YeniSayfa from "./pages/tests/yeni-sayfa";
+import MagicEmojiPage from "./pages/tests/magic-emoji";
 
 export default function App() {
 	return (
@@ -26,6 +28,8 @@ export default function App() {
 						element={<DynamicWidthModal />}
 					/>
 					<Route path="tests/playground" element={<Playground />} />
+					<Route path="tests/yeni-sayfa" element={<YeniSayfa />} />
+					<Route path="tests/magic-emoji" element={<MagicEmojiPage />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
