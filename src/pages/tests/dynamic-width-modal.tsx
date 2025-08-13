@@ -12,9 +12,11 @@ import {
 	AnimatePresence,
 	LayoutGroup,
 } from "motion/react";
+import { Textarea } from "@/components/ui/textarea";
 
 const DynamicWidthModal = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const [showInput, setShowInput] = useState(false);
 
 	const containerSmooth = {
 		giris: {
@@ -23,28 +25,30 @@ const DynamicWidthModal = () => {
 		animasyon: {
 			opacity: 1,
 			transition: {
-				delayChildren: 0.1,
+				delayChildren: 0.2,
 			},
 		},
 	};
 	const contentSmooth = {
 		giris: {
-			filter: "blur(5px)",
-			opacity: 0,
+			y: -200,
 		},
 		animasyon: {
-			filter: "blur(0px)",
-			opacity: 1,
-		},
-		cikis: {
-			filter: "blur(5px)",
-			opacity: 0,
+			y: 0,
 		},
 	};
 
 	return (
-		<MotionConfig transition={{ duration: 0.3, ease: "easeInOut" }}>
-			<div className="p-8  min-h-screen">
+		<MotionConfig
+			transition={{
+				duration: 0.2,
+				ease: "linear",
+				type: "spring",
+				stiffness: 80,
+				damping: 20,
+			}}
+		>
+			<div className="p-8  min-h-screen flex justify-center items-center">
 				<LayoutGroup>
 					<AnimatePresence mode="wait">
 						{!isOpen && (
@@ -59,7 +63,7 @@ const DynamicWidthModal = () => {
 									borderRadius: "10px",
 								}}
 								onClick={() => setIsOpen(true)}
-								className="bg-accent text-black px-6 py-3 rounded-lg font-medium overflow-hidden"
+								className="bg-accent border shadow-xs text-black px-6 py-3 rounded-lg font-medium overflow-hidden"
 							>
 								<motion.div layoutId="content" variants={contentSmooth}>
 									Modal Aç
@@ -74,12 +78,13 @@ const DynamicWidthModal = () => {
 								initial="giris"
 								animate="animasyon"
 								exit="cikis"
-								className="bg-accent overflow-hidden"
+								className="bg-accent border shadow-xs overflow-hidden"
 								style={{
 									borderRadius: "10px",
 								}}
 							>
 								<motion.div
+									layout="position"
 									layoutId="content"
 									variants={contentSmooth}
 									className="p-6"
@@ -115,6 +120,33 @@ const DynamicWidthModal = () => {
 												özelliği kullanılarak bu efekt elde edildi.
 											</p>
 										</div>
+										<Button
+											variant="outline"
+											onClick={() => setShowInput((v) => !v)}
+										>
+											{showInput ? "Gizle" : "Göster"}
+										</Button>
+										<motion.div
+											layout="position"
+											layoutId="input"
+											className="mt-6 flex items-center gap-3"
+										>
+											<AnimatePresence mode="wait">
+												{showInput && (
+													<motion.div
+														initial={{ height: 0 }}
+														animate={{ height: "auto" }}
+														exit={{ height: 0 }}
+														transition={{
+															type: "tween",
+														}}
+														className="flex-1 overflow-hidden"
+													>
+														<Textarea placeholder="Bir şey yazın..." />
+													</motion.div>
+												)}
+											</AnimatePresence>
+										</motion.div>
 									</CardContent>
 
 									<CardFooter className="p-0 flex gap-3 justify-end">
