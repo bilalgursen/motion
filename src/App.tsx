@@ -10,6 +10,7 @@ import DynamicWidthModal from "./pages/tests/dynamic-width-modal";
 import Playground from "./pages/tests/playground";
 import YeniSayfa from "./pages/tests/yeni-sayfa";
 import MagicEmojiPage from "./pages/tests/magic-emoji";
+import BagisModal from "./pages/tests/bagis-modal";
 
 export default function App() {
 	return (
@@ -30,6 +31,7 @@ export default function App() {
 					<Route path="tests/playground" element={<Playground />} />
 					<Route path="tests/yeni-sayfa" element={<YeniSayfa />} />
 					<Route path="tests/magic-emoji" element={<MagicEmojiPage />} />
+					<Route path="tests/bagis-modal" element={<BagisModal />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

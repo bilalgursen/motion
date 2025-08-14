@@ -33,14 +33,14 @@ export default function Layout() {
 						animate={{ x: 0, opacity: 1 }}
 						exit={{ x: -256, opacity: 0 }}
 						transition={{ duration: 0.3, ease: "easeInOut" }}
-						className="w-64 bg-muted/30 border-r p-4 relative"
+						className="w-64 bg-muted/30 border-r p-4 relative flex flex-col"
 					>
 						<div className="mb-6">
 							<h2 className="text-lg font-semibold">Motion Tests</h2>
 							<p className="text-sm text-muted-foreground">Test sayfaları</p>
 						</div>
 
-						<nav className="space-y-2">
+						<nav className="space-y-2 flex-1">
 							{testRoutes.map((route) => (
 								<Button
 									key={route.path}
@@ -57,6 +57,35 @@ export default function Layout() {
 								</Button>
 							))}
 						</nav>
+
+						{/* Bottom pinned action */}
+						<div className="mt-auto w-full flex justify-center">
+							<Button
+								variant="ghost"
+								className="w-32 justify-start items-center overflow-hidden hover:bg-indigo-500 bg-indigo-500 px-0 hover:scale-110 hover:-rotate-2"
+							>
+								<div className="relative w-full overflow-hidden">
+									<motion.div
+										className="flex w-max whitespace-nowrap text-amber-100"
+										animate={{ x: ["-50%", "0%"] }}
+										transition={{
+											duration: 8,
+											ease: "linear",
+											repeat: Infinity,
+										}}
+									>
+										<div className="flex items-center gap-1 pr-1">
+											<Link to="/tests/bagis-modal">Bagis Modal 😂</Link>
+											<Link to="/tests/bagis-modal">Bagis Modal 😂</Link>
+										</div>
+										<div className="flex items-center gap-1 pr-1">
+											<Link to="/tests/bagis-modal">Bagis Modal 😂</Link>
+											<Link to="/tests/bagis-modal">Bagis Modal 😂</Link>
+										</div>
+									</motion.div>
+								</div>
+							</Button>
+						</div>
 
 						{/* Close Button */}
 						<Button
@@ -90,7 +119,6 @@ export default function Layout() {
 						</Button>
 					</motion.div>
 				)}
-
 				<Outlet />
 			</main>
 		</div>
