@@ -149,17 +149,33 @@ const DynamicWidthModal = () => {
 											className=" w-full px-4 flex items-center justify-center rounded-t-lg"
 											onClick={() => setShowInput((v) => !v)}
 										>
-											{
-												<motion.button
-													layout={false}
-													className="bg-white"
-													animate={{ width: showInput ? 288 : 128 }}
+											{showInput ? (
+												<motion.div
+													layoutId="showButton"
+													className="bg-white w-72 flex "
 												>
-													<span className="block text-center w-full">
-														{showInput ? "Göster" : "Gizle"}
-													</span>
-												</motion.button>
-											}
+													<motion.div
+														layout="position"
+														layoutId="showButtonText"
+														className="mx-auto"
+													>
+														Göster
+													</motion.div>
+												</motion.div>
+											) : (
+												<motion.div
+													layoutId="showButton"
+													className="bg-white w-32 flex "
+												>
+													<motion.div
+														layout="position"
+														layoutId="showButtonText"
+														className="mx-auto"
+													>
+														Gizle
+													</motion.div>
+												</motion.div>
+											)}
 										</motion.div>
 									</CardFooter>
 								</motion.div>
