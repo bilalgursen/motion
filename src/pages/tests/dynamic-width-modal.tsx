@@ -1,17 +1,13 @@
 import { useState } from "react";
-import { Button } from "../../components/ui/button";
+
 import {
 	CardContent,
 	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import {
-	motion,
-	MotionConfig,
-	AnimatePresence,
-	LayoutGroup,
-} from "motion/react";
+import { motion, MotionConfig, AnimatePresence } from "motion/react";
+import { IoIosClose, IoIosOpen } from "react-icons/io";
 import { Textarea } from "@/components/ui/textarea";
 
 const DynamicWidthModal = () => {
@@ -24,14 +20,11 @@ const DynamicWidthModal = () => {
 		},
 		animasyon: {
 			opacity: 1,
-			transition: {
-				delayChildren: 0.2,
-			},
 		},
 	};
 	const contentSmooth = {
 		giris: {
-			y: -200,
+			y: 80,
 		},
 		animasyon: {
 			y: 0,
@@ -41,72 +34,82 @@ const DynamicWidthModal = () => {
 	return (
 		<MotionConfig
 			transition={{
-				duration: 0.2,
+				duration: 0.1,
 				ease: "linear",
 				type: "spring",
-				stiffness: 80,
+				stiffness: 90,
 				damping: 20,
 			}}
 		>
 			<div className="p-8  min-h-screen flex justify-center items-center">
-				<LayoutGroup>
-					<AnimatePresence mode="wait">
-						{!isOpen && (
-							<motion.button
-								key="button"
-								layoutId="container"
-								variants={containerSmooth}
-								initial="giris"
-								animate="animasyon"
-								exit="cikis"
-								style={{
-									borderRadius: "10px",
-								}}
-								onClick={() => setIsOpen(true)}
-								className="bg-accent border shadow-xs text-black px-6 py-3 rounded-lg font-medium overflow-hidden"
-							>
-								<motion.div layoutId="content" variants={contentSmooth}>
-									Modal Aç
-								</motion.div>
-							</motion.button>
-						)}
-						{isOpen && (
+				<motion.div layout="position">
+					{!isOpen && (
+						<motion.button
+							key="button"
+							layoutId="container"
+							variants={containerSmooth}
+							initial="giris"
+							animate="animasyon"
+							exit="cikis"
+							style={{
+								borderRadius: "10px",
+							}}
+							onClick={() => setIsOpen(true)}
+							className="bg-accent flex items-center gap-2 shadow-xs text-black px-6 py-3 rounded-lg font-medium overflow-hidden"
+						>
 							<motion.div
-								layoutId="container"
-								key="modal"
-								variants={containerSmooth}
-								initial="giris"
-								animate="animasyon"
-								exit="cikis"
-								className="bg-accent border shadow-xs overflow-hidden"
-								style={{
-									borderRadius: "10px",
-								}}
+								layout="position"
+								layoutId="button"
+								variants={contentSmooth}
+								className="flex items-center gap-2"
 							>
-								<motion.div
-									layout="position"
-									layoutId="content"
-									variants={contentSmooth}
-									className="p-6"
-								>
-									<CardHeader className="p-0 mb-4">
+								Modal Aç
+							</motion.div>
+							<motion.div
+								layout="position"
+								layoutId="icon"
+								variants={contentSmooth}
+							>
+								<IoIosOpen />
+							</motion.div>
+						</motion.button>
+					)}
+					{isOpen && (
+						<motion.div
+							key="modal"
+							layoutId="container"
+							variants={containerSmooth}
+							initial="giris"
+							animate="animasyon"
+							exit="cikis"
+							className="bg-accent  shadow-xs overflow-hidden"
+							style={{
+								borderRadius: "10px",
+							}}
+						>
+							<AnimatePresence>
+								<motion.div layout="position" variants={contentSmooth}>
+									<CardHeader className="p-6 mb-4">
 										<CardTitle>
 											<div className="flex justify-between items-center">
-												<h2 className="text-xl font-semibold">
-													Genişleyen Modal
-												</h2>
-												<button
-													type="button"
+												<motion.div layout="position" layoutId="button">
+													Modal Açıldı
+												</motion.div>
+
+												<motion.div
+													layout="position"
+													layoutId="icon"
+													variants={contentSmooth}
+													className="text-4xl"
 													onClick={() => setIsOpen(false)}
-													className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
 												>
-													×
-												</button>
+													<IoIosClose />
+												</motion.div>
 											</div>
 										</CardTitle>
 									</CardHeader>
 
-									<CardContent className="p-0 mb-6">
+									<CardContent className="p-6 mb-6">
 										<p className="text-gray-600 leading-relaxed">
 											Bu modal, butondan doğrudan genişleyerek açılır. Layout
 											animasyonu sayesinde smooth bir geçiş yaşanır.
@@ -120,15 +123,8 @@ const DynamicWidthModal = () => {
 												özelliği kullanılarak bu efekt elde edildi.
 											</p>
 										</div>
-										<Button
-											variant="outline"
-											onClick={() => setShowInput((v) => !v)}
-										>
-											{showInput ? "Gizle" : "Göster"}
-										</Button>
 										<motion.div
 											layout="position"
-											layoutId="input"
 											className="mt-6 flex items-center gap-3"
 										>
 											<AnimatePresence mode="wait">
@@ -148,20 +144,29 @@ const DynamicWidthModal = () => {
 											</AnimatePresence>
 										</motion.div>
 									</CardContent>
-
-									<CardFooter className="p-0 flex gap-3 justify-end">
-										<Button variant="outline" onClick={() => setIsOpen(false)}>
-											İptal
-										</Button>
-										<Button className="bg-blue-500 hover:bg-blue-600">
-											Kaydet
-										</Button>
+									<CardFooter className="flex items-bottom gap-3 p-0 px-6">
+										<motion.div
+											className=" w-full px-4 flex items-center justify-center rounded-t-lg"
+											onClick={() => setShowInput((v) => !v)}
+										>
+											{
+												<motion.button
+													layout={false}
+													className="bg-white"
+													animate={{ width: showInput ? 288 : 128 }}
+												>
+													<span className="block text-center w-full">
+														{showInput ? "Göster" : "Gizle"}
+													</span>
+												</motion.button>
+											}
+										</motion.div>
 									</CardFooter>
 								</motion.div>
-							</motion.div>
-						)}
-					</AnimatePresence>
-				</LayoutGroup>
+							</AnimatePresence>
+						</motion.div>
+					)}
+				</motion.div>
 			</div>
 		</MotionConfig>
 	);
